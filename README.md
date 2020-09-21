@@ -23,3 +23,5 @@ static void Main(string[] args)
             }
         }
 ```
+
+REMEMBER: In code you will have to give your own Authentication Token and Twitch Developer Credentials!
