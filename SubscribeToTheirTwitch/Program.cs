@@ -32,14 +32,21 @@ namespace ScrapeTheirTwitch
         public Pagination Pagination { get; set; }
     }
 
+    /// <summary>
+    /// Iterates through givin array returning data on each channel name
+    /// </summary>
+    /// <param name="channels">Array of given channels names to scrape</param>
+    /// <param name="clientID">ID used for authentication from TwitchDeveloper account</param>
+    /// <param name="token">Oauth token used for authentication from TwitchDeveloper account</param>
+    /// <returns></returns>
     class Scrape
     {
-        public static List<FinalData> IsOnline(string[] channels)
+        public static List<FinalData> IsOnline(string[] channels, string clientID, string token)
         {
             var hc = new HttpClient();
 
-            hc.DefaultRequestHeaders.Add("Client-ID", "Your client ID");
-            hc.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "Your token");
+            hc.DefaultRequestHeaders.Add("Client-ID", clientID);
+            hc.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
             List<FinalData> r = new List<FinalData>();
 
@@ -61,10 +68,12 @@ namespace ScrapeTheirTwitch
         static void Main(string[] args)
         {
             // A string[] is required
-            string[] Clients = { "quattroace", "shroud" };
+            string[] channels = { "quattroace", "shroud" };
+            string clientID = "Your clientID";
+            string token = "Your Oauth Token";
 
             // Create new FinalData resonse to hold scraped data
-            List<FinalData> response = new List<FinalData>(Scrape.IsOnline(Clients));
+            List<FinalData> response = new List<FinalData>(Scrape.IsOnline(channels, clientID, token));
 
             // Iterate through the multiple entrys and utilize data. You do not have to iterate if just scraping for one streamer.
             foreach (FinalData responseIng in response)
